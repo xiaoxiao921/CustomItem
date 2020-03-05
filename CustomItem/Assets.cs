@@ -20,7 +20,7 @@ namespace CustomItem
             // First registering your AssetBundle into the ResourcesAPI with a modPrefix that'll also be used for your prefab and icon paths
             // note that the string parameter of this GetManifestResourceStream call will change depending on
             // your namespace and file name
-            using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("CustomItem.Rampage_data")) 
+            using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("CustomItem.rampage")) 
             {
                 var bundle = AssetBundle.LoadFromStream(stream);
                 var provider = new AssetBundleResourcesProvider(ModPrefix.TrimEnd(':'), bundle);
