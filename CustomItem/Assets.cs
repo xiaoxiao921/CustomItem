@@ -31,6 +31,8 @@ namespace CustomItem
 
             BiscoLeashAsRedTierItem();
             BiscoLeashAsEquipment();
+
+            AddLanguageTokens();
         }
 
         private static void BiscoLeashAsRedTierItem()
@@ -41,10 +43,10 @@ namespace CustomItem
                 tier = ItemTier.Tier3,
                 pickupModelPath = PrefabPath,
                 pickupIconPath = IconPath,
-                nameToken = "Bisco's Leash", // stylised name
-                pickupToken = "Grants <style=cDeath>RAMPAGE</style> on kill. \n<style=cDeath>RAMPAGE</style> : Specifics rewards for reaching kill streaks. \nIncreases <style=cIsUtility>movement speed</style> by <style=cIsUtility>1%</style> <style=cIsDamage>(+1% per item stack)</style> <style=cStack>(+1% every 20 Rampage Stacks)</style>. \nIncreases <style=cIsUtility>damage</style> by <style=cIsUtility>2%</style> <style=cIsDamage>(+2% per item stack)</style> <style=cStack>(+2% every 20 Rampage Stacks)</style>.",
-                descriptionToken = "Grants <style=cDeath>RAMPAGE</style> on kill. \n<style=cDeath>RAMPAGE</style> : Specifics rewards for reaching kill streaks. \nIncreases <style=cIsUtility>movement speed</style> by <style=cIsUtility>1%</style> <style=cIsDamage>(+1% per item stack)</style> <style=cStack>(+1% every 20 Rampage Stacks)</style>. \nIncreases <style=cIsUtility>damage</style> by <style=cIsUtility>2%</style> <style=cIsDamage>(+2% per item stack)</style> <style=cStack>(+2% every 20 Rampage Stacks)</style>.",
-                loreToken = "Should passion die down,\r\nShould light be extinguished,\r\nWill you bring me patience?\r\nWill you die with me?\"\r\n\r\n-The Syzygy of Io and Europa",
+                nameToken = "BISCOLEASH_NAME", // stylised name
+                pickupToken = "BISCOLEASH_PICKUP",
+                descriptionToken = "BISCOLEASH_DESC",
+                loreToken = "BISCOLEASH_LORE",
                 tags = new[]
                 {
                     ItemTag.Utility,
@@ -72,10 +74,10 @@ namespace CustomItem
                 cooldown = 5f,
                 pickupModelPath = PrefabPath,
                 pickupIconPath = IconPath,
-                nameToken = "Bisco's Leash Equipment", // stylised name
-                pickupToken = "Grants <style=cDeath>RAMPAGE</style> on kill. \n<style=cDeath>RAMPAGE</style> : Specifics rewards for reaching kill streaks. \nIncreases <style=cIsUtility>movement speed</style> by <style=cIsUtility>1%</style> <style=cIsDamage>(+1% per item stack)</style> <style=cStack>(+1% every 20 Rampage Stacks)</style>. \nIncreases <style=cIsUtility>damage</style> by <style=cIsUtility>2%</style> <style=cIsDamage>(+2% per item stack)</style> <style=cStack>(+2% every 20 Rampage Stacks)</style>.",
-                descriptionToken = "Grants <style=cDeath>RAMPAGE</style> on kill. \n<style=cDeath>RAMPAGE</style> : Specifics rewards for reaching kill streaks. \nIncreases <style=cIsUtility>movement speed</style> by <style=cIsUtility>1%</style> <style=cIsDamage>(+1% per item stack)</style> <style=cStack>(+1% every 20 Rampage Stacks)</style>. \nIncreases <style=cIsUtility>damage</style> by <style=cIsUtility>2%</style> <style=cIsDamage>(+2% per item stack)</style> <style=cStack>(+2% every 20 Rampage Stacks)</style>.",
-                loreToken = "Should passion die down,\r\nShould light be extinguished,\r\nWill you bring me patience?\r\nWill you die with me?\"\r\n\r\n-The Syzygy of Io and Europa",
+                nameToken = "BISCOLEASH_NAME", // stylised name
+                pickupToken = "BISCOLEASH_PICKUP",
+                descriptionToken = "BISCOLEASH_DESC",
+                loreToken = "BISCOLEASH_LORE",
                 canDrop = true,
                 enigmaCompatible = false
             };
@@ -90,6 +92,20 @@ namespace CustomItem
             var biscoLeash = new CustomEquipment(biscoLeashEquipmentDef, itemDisplayRules);
 
             BiscoLeashEquipmentIndex = ItemAPI.Add(biscoLeash); // ItemAPI sends back the EquipmentIndex of your equipment
+        }
+
+        private static void AddLanguageTokens()
+        {
+            //The Name should be self explanatory
+            R2API.AssetPlus.Languages.AddToken("BISCOLEASH_NAME", "Bisco's Leash");
+            //The Pickup is the short text that appears when you first pick this up. This text should be short and to the point, nuimbers are generally ommited.
+            R2API.AssetPlus.Languages.AddToken("BISCOLEASH_PICKUP", "Gain Rampage stack on kill");
+            //The Description is where you put the actual numbers and give an advanced description.
+            R2API.AssetPlus.Languages.AddToken("BISCOLEASH_DESC",
+                "Grants <style=cDeath>RAMPAGE</style> on kill. \n<style=cDeath>RAMPAGE</style> : Specifics rewards for reaching kill streaks. \nIncreases <style=cIsUtility>movement speed</style> by <style=cIsUtility>1%</style> <style=cIsDamage>(+1% per item stack)</style> <style=cStack>(+1% every 20 Rampage Stacks)</style>. \nIncreases <style=cIsUtility>damage</style> by <style=cIsUtility>2%</style> <style=cIsDamage>(+2% per item stack)</style> <style=cStack>(+2% every 20 Rampage Stacks)</style>.");
+            //The Lore is, well, flavor. You can write pretty much whatever you want here.
+            R2API.AssetPlus.Languages.AddToken("BISCOLEASH_LORE",
+                "You were always there, by my side, whether we sat or played. Our friendship was a joyful ride, I wish you could have stayed.");
         }
     }
 }
