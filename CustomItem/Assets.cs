@@ -8,12 +8,12 @@ namespace CustomItem
     internal static class Assets
     {
         internal static GameObject BiscoLeashPrefab;
-        internal static ItemIndex BiscoLeashItemIndex;
-        internal static EquipmentIndex BiscoLeashEquipmentIndex;
+        internal static Sprite BiscoLeashIcon;
+
+        internal static ItemDef BiscoLeashItemDef;
+        internal static EquipmentDef BiscoLeashEquipmentDef;
 
         private const string ModPrefix = "@CustomItem:";
-        private const string PrefabPath = ModPrefix + "Assets/Import/belt/belt.prefab";
-        private const string IconPath = ModPrefix + "Assets/Import/belt_icon/belt_icon.png";
 
         internal static void Init()
         {
@@ -23,10 +23,9 @@ namespace CustomItem
             using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("CustomItem.rampage")) 
             {
                 var bundle = AssetBundle.LoadFromStream(stream);
-                var provider = new AssetBundleResourcesProvider(ModPrefix.TrimEnd(':'), bundle);
-                ResourcesAPI.AddProvider(provider);
 
                 BiscoLeashPrefab = bundle.LoadAsset<GameObject>("Assets/Import/belt/belt.prefab");
+                BiscoLeashIcon = bundle.LoadAsset<Sprite>("Assets/Import/belt_icon/belt_icon.png");
             }
 
             BiscoLeashAsRedTierItem();
@@ -37,12 +36,12 @@ namespace CustomItem
 
         private static void BiscoLeashAsRedTierItem()
         {
-            var biscoLeashItemDef = new ItemDef
+            BiscoLeashItemDef = new ItemDef
             {
                 name = "BiscosLeash", // its the internal name, no spaces, apostrophes and stuff like that
                 tier = ItemTier.Tier3,
-                pickupModelPath = PrefabPath,
-                pickupIconPath = IconPath,
+                pickupModelPrefab = BiscoLeashPrefab,
+                pickupIconSprite = BiscoLeashIcon,
                 nameToken = "BISCOLEASH_NAME", // stylised name
                 pickupToken = "BISCOLEASH_PICKUP",
                 descriptionToken = "BISCOLEASH_DESC",
@@ -61,19 +60,19 @@ namespace CustomItem
             itemDisplayRules[0].localAngles = new Vector3(0f, 180f, 0f); // rotate the model
             itemDisplayRules[0].localPos = new Vector3(-0.35f, -0.1f, 0f); // position offset relative to the childName, here the survivor Chest
 
-            var biscoLeash = new R2API.CustomItem(biscoLeashItemDef, itemDisplayRules);
+            var biscoLeash = new R2API.CustomItem(BiscoLeashItemDef, itemDisplayRules);
 
-            BiscoLeashItemIndex = ItemAPI.Add(biscoLeash); // ItemAPI sends back the ItemIndex of your item
+            ItemAPI.Add(biscoLeash); // ItemAPI sends back the ItemIndex of your item
         }
 
         private static void BiscoLeashAsEquipment()
         {
-            var biscoLeashEquipmentDef = new EquipmentDef
+            BiscoLeashEquipmentDef = new EquipmentDef
             {
                 name = "BiscosLeashEquipment", // its the internal name, no spaces, apostrophes and stuff like that
                 cooldown = 5f,
-                pickupModelPath = PrefabPath,
-                pickupIconPath = IconPath,
+                pickupModelPrefab = BiscoLeashPrefab,
+                pickupIconSprite = BiscoLeashIcon,
                 nameToken = "BISCOLEASH_NAME", // stylised name
                 pickupToken = "BISCOLEASH_PICKUP",
                 descriptionToken = "BISCOLEASH_DESC",
@@ -89,22 +88,22 @@ namespace CustomItem
             itemDisplayRules[0].localAngles = new Vector3(0f, 180f, 0f); // rotate the model
             itemDisplayRules[0].localPos = new Vector3(-0.35f, -0.1f, 0f); // position offset relative to the childName, here the survivor Chest
 
-            var biscoLeash = new CustomEquipment(biscoLeashEquipmentDef, itemDisplayRules);
+            var biscoLeash = new CustomEquipment(BiscoLeashEquipmentDef, itemDisplayRules);
 
-            BiscoLeashEquipmentIndex = ItemAPI.Add(biscoLeash); // ItemAPI sends back the EquipmentIndex of your equipment
+            ItemAPI.Add(biscoLeash);
         }
 
         private static void AddLanguageTokens()
         {
             //The Name should be self explanatory
-            R2API.AssetPlus.Languages.AddToken("BISCOLEASH_NAME", "Bisco's Leash");
+            LanguageAPI.Add("BISCOLEASH_NAME", "Bisco's Leash");
             //The Pickup is the short text that appears when you first pick this up. This text should be short and to the point, nuimbers are generally ommited.
-            R2API.AssetPlus.Languages.AddToken("BISCOLEASH_PICKUP", "Gain Rampage stack on kill");
+            LanguageAPI.Add("BISCOLEASH_PICKUP", "Gain Rampage stack on kill");
             //The Description is where you put the actual numbers and give an advanced description.
-            R2API.AssetPlus.Languages.AddToken("BISCOLEASH_DESC",
+            LanguageAPI.Add("BISCOLEASH_DESC",
                 "Grants <style=cDeath>RAMPAGE</style> on kill. \n<style=cDeath>RAMPAGE</style> : Specifics rewards for reaching kill streaks. \nIncreases <style=cIsUtility>movement speed</style> by <style=cIsUtility>1%</style> <style=cIsDamage>(+1% per item stack)</style> <style=cStack>(+1% every 20 Rampage Stacks)</style>. \nIncreases <style=cIsUtility>damage</style> by <style=cIsUtility>2%</style> <style=cIsDamage>(+2% per item stack)</style> <style=cStack>(+2% every 20 Rampage Stacks)</style>.");
             //The Lore is, well, flavor. You can write pretty much whatever you want here.
-            R2API.AssetPlus.Languages.AddToken("BISCOLEASH_LORE",
+            LanguageAPI.Add("BISCOLEASH_LORE",
                 "You were always there, by my side, whether we sat or played. Our friendship was a joyful ride, I wish you could have stayed.");
         }
     }

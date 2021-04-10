@@ -1,13 +1,12 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
 using R2API;
-using R2API.AssetPlus;
 using R2API.Utils;
 
 namespace CustomItem
 {
     [BepInDependency(R2API.R2API.PluginGUID)]
-    [R2APISubmoduleDependency(nameof(AssetPlus), nameof(ItemAPI), nameof(ItemDropAPI), nameof(ResourcesAPI))]
+    [R2APISubmoduleDependency(nameof(ItemAPI), nameof(LanguageAPI))]
     [BepInPlugin(ModGuid, ModName, ModVer)]
     public class CustomItem : BaseUnityPlugin
     {
